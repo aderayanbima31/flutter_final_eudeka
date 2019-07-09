@@ -22,19 +22,6 @@ class _DetailAppState extends State<DetailApp>{
   _DetailAppState(this.data);
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        scaffoldKey.currentState.showSnackBar(
-            SnackBar(
-              content: Text(data.name),
-              duration: Duration(seconds: 1),
-            )
-        )
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -73,4 +60,18 @@ class _DetailAppState extends State<DetailApp>{
       ),
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        scaffoldKey.currentState.showSnackBar(
+            SnackBar(
+              content: Text(data.name),
+              duration: Duration(seconds: 1),
+            )
+        )
+    );
+  }
+
 }

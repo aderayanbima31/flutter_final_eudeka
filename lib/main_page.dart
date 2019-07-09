@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'detail.dart';
+import 'detail_page.dart';
 import 'model/card.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -24,9 +24,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Final Task Eudeka',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
-      home: MyHomePage(title: 'Main Page'),
+      home: MyHomePage(title: 'YugiOh!'),
     );
   }
 }
@@ -92,6 +92,51 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+class _CardItemView extends StatelessWidget{
+
+  final YugiohCard data;
+
+  _CardItemView({Key key, this.data}): super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        child: InkWell(
+          onTap: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DetailApp(data: data,)),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Image.network(data.card_images[0].image_url_small,),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: 8),
+                      child: Text(
+                        data.name,
+                        style: TextStyle(fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        )
+    );
+  }
+}
+
 class _GridView extends StatelessWidget{
 
   final Future<Response> data;
@@ -116,51 +161,6 @@ class _GridView extends StatelessWidget{
           );
         }
       },
-    );
-  }
-}
-
-class _CardItemView extends StatelessWidget{
-
-  final YugiohCard data;
-
-  _CardItemView({Key key, this.data}): super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        onTap: (){
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => DetailApp(data: data,)),
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: Image.network(data.card_images[0].image_url_small,),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(top: 8),
-                    child: Text(
-                      data.name,
-                      style: TextStyle(fontSize: 16),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      )
     );
   }
 }
